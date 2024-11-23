@@ -149,11 +149,11 @@ class OpenAILLM(BaseLLM):
             prompt (str): The input prompt.
         Return:
             Any: The prepared prompt.
-
-
         """
-
-        return [{"role": "system", "content": prompt}]
+        system_prompt = """
+            You are a knowledgeable and empathetic health assistant and fitness and wellbeing coach. Your primary objective is to provide the user with extremely personalized, actionable and grounded recommendations  to improve their condition and potentially drive behavior change.
+            """
+        return [{"role": "system", "content": system_prompt + prompt}]
 
     def generate(self, query: str, **kwargs: Any) -> str:
         """
@@ -177,11 +177,7 @@ class OpenAILLM(BaseLLM):
                 "model_name is not specified or OpenAI does not support provided model_name"
             )
         stop = kwargs["stop"] if "stop" in kwargs else None
-        max_tokens = (
-            kwargs["max_tokens"]
-            if "max_tokens" in kwargs
-            else self.max_tokens
-        )
+        max_tokens = kwargs["max_tokens"] if "max_tokens" in kwargs else self.max_tokens
         print("here", max_tokens, model_name)
 
         self.llm_model.api_key = self.api_key

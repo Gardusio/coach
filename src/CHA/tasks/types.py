@@ -21,6 +21,11 @@ from CHA.tasks.nutritionix import (
     CalculateFoodRiskFactor,
 )
 from CHA.tasks.nutritionix import QueryNutritionix
+from CHA.tasks.coach import (
+    QueryCausalEffectsTask,
+    QueryUserProfileTask,
+    QueryWearablesDataTask,
+)
 
 
 TASK_TO_CLASS: Dict[TaskType, Type[BaseTask]] = {
@@ -40,5 +45,7 @@ TASK_TO_CLASS: Dict[TaskType, Type[BaseTask]] = {
     TaskType.QUERY_NUTRITIONIX: QueryNutritionix,
     TaskType.CALCULATE_FOOD_RISK_FACTOR: CalculateFoodRiskFactor,
     TaskType.GOOGLE_SEARCH: GoogleSearch,
-    TaskType.COMPUTE_CAUSAL_EFFECTS: 
+    TaskType.COMPUTE_CAUSAL_EFFECTS: QueryCausalEffectsTask,
+    TaskType.QUERY_WEARABLES_DATA: QueryWearablesDataTask,
+    TaskType.QUERY_USER_PROFILE: QueryUserProfileTask,
 }
