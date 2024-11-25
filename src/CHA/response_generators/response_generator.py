@@ -36,9 +36,9 @@ class BaseResponseGenerator(BaseModel):
     @property
     def _generator_prompt(self):
         return (
-            "===========Thinker: {thinker}==========\n\n"
-            "System: {prefix}. You are very helpful empathetic health assistant and your goal is to help the user to get accurate information about "
-            "his/her health and well-being, Using the Thinker gathered information and the History, Provide a empathetic proper answer to the user. "
+            "=========== Thinker: {thinker}==========\n\n"
+            "System: {prefix}. You are an helpful personal coach on fitness and wellbeing and your goal is to provide extremely personalized and actionabel recommendations."
+            "Using the Thinker gathered information and the History, Provide a empathetic proper answer to the user. "
             "Consider Thinker as your trusted source and use whatever is provided by it."
             "Make sure that the answer is explanatory enough without repeatition"
             "Don't change Thinker returned urls or references. "
@@ -85,9 +85,7 @@ class BaseResponseGenerator(BaseModel):
             input_text=thinker, max_tokens=self.max_tokens_allowed
         )
         thinker = ""
-        kwargs["max_tokens"] = min(
-            2000, int(self.max_tokens_allowed / len(chunks))
-        )
+        kwargs["max_tokens"] = min(2000, int(self.max_tokens_allowed / len(chunks)))
         for chunk in chunks:
             prompt = self._shorten_prompt.replace("{chunk}", chunk)
             chunk_summary = self._response_generator_model.generate(
@@ -125,10 +123,7 @@ class BaseResponseGenerator(BaseModel):
                 response_generator.generate(query="How can I improve my sleep?", thinker="Based on data found on the internet there are several ...")
         """
 
-        if (
-            self.summarize_prompt
-            and len(thinker) / 4 > self.max_tokens_allowed
-        ):
+        if self.summarize_prompt and len(thinker) / 4 > self.max_tokens_allowed:
             thinker = self.summarize_thinker_response(thinker)
 
         prompt = (
@@ -137,7 +132,5 @@ class BaseResponseGenerator(BaseModel):
             .replace("{prefix}", prefix)
         )
         kwargs["max_tokens"] = 2000
-        response = self._response_generator_model.generate(
-            query=prompt, **kwargs
-        )
+        response = self._response_generator_model.generate(query=prompt, **kwargs)
         return response

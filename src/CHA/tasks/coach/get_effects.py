@@ -6,9 +6,16 @@ from CHA.tasks import BaseTask
 class QueryCausalEffectsTask(BaseTask):
     name: str = "causal_effects"
     chat_name: str = "QueryCausalEffects"
-    description: str = "Retrieve causal effects (as correlations) from the dataset."
+    description: str = (
+        "Retrieves causal effects (as correlations) without any other inputs."
+    )
     output_type: bool = False
     return_direct: bool = True
+    dependencies: List[Any] = []
+    inputs: List[str] = []
+    output: List[str] = [
+        "An object containing causal effects score in the form of 'effects of X on Y: VALUE"
+    ]
 
     def _execute(
         self,
@@ -20,6 +27,7 @@ class QueryCausalEffectsTask(BaseTask):
         return "Retrieve causal effects"
 
     def get_causal_effects(self, inputs):
+        print(inputs)
         return {
             "'sleep_points_percentage' effect on 'stress_score'": 0.9,
             "'steps' effect on 'stress_score'": 0.4,

@@ -1,21 +1,28 @@
 from CHA.tasks import BaseTask
+from typing import List, Any
 
 
 class QueryUserProfileTask(BaseTask):
-    def _execute(self, inputs) -> str:
-        print("#" * 80)
-        print("USER PROFILE INPUTS")
-        print(inputs)
-        print("#" * 80)
+    name: str = "get_profile"
+    chat_name: str = "QueryUserProfileTask"
+    description: str = (
+        "Retrieves user static information like age, gender, weight and height"
+    )
+    output_type: bool = False
+    return_direct: bool = True
+    dependencies: List[Any] = []
+    inputs: List[str] = []
+    output: List[str] = [
+        "An object containing user infos like age, gender, weight and height"
+    ]
+
+    def _execute(self) -> str:
         return self.get_user_profile()
 
-    @staticmethod
     def get_user_profile(self):
-        # Mockup static profile data for 621e2fce67b776a240279baa (cleaned)
         return {
-            "Age": "Below 30",
+            "Age": "27",
             "Gender": "Male",
-            "Bmi": "24",
-            "Height_cm": "183",
-            "Weight_kg": "80",
+            "Height in cm": "173",
+            "Weight in kg": "65",
         }

@@ -449,7 +449,6 @@ class Orchestrator(BaseModel):
             prompt = prompt[0]
         # history = self.available_tasks["google_translate"].execute(history+"$#en").text
         final_response = ""
-        finished = False
         self.print_log("planner", "Planning Started...\n")
         while True:
             try:

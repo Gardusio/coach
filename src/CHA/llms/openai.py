@@ -150,10 +150,7 @@ class OpenAILLM(BaseLLM):
         Return:
             Any: The prepared prompt.
         """
-        system_prompt = """
-            You are a knowledgeable and empathetic health assistant and fitness and wellbeing coach. Your primary objective is to provide the user with extremely personalized, actionable and grounded recommendations  to improve their condition and potentially drive behavior change.
-            """
-        return [{"role": "system", "content": system_prompt + prompt}]
+        return [{"role": "system", "content": prompt}]
 
     def generate(self, query: str, **kwargs: Any) -> str:
         """
