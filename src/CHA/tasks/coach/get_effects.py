@@ -7,14 +7,14 @@ class QueryCausalEffectsTask(BaseTask):
     name: str = "causal_effects"
     chat_name: str = "QueryCausalEffects"
     description: str = (
-        "Retrieves causal effects (as correlations) without any other inputs."
+        "This tool is used to retrieve user personal causal effects. Causal effects will drive the personalization of recommendations. No inputs required"
     )
-    output_type: bool = False
-    return_direct: bool = True
+    output_type: bool = True
+    return_direct: bool = False
     dependencies: List[Any] = []
     inputs: List[str] = []
     output: List[str] = [
-        "An object containing causal effects score in the form of 'effects of X on Y: VALUE"
+        "An object containing causal effects scores in the form of 'effects of X on Y: VALUE' entries."
     ]
 
     def _execute(
@@ -24,14 +24,16 @@ class QueryCausalEffectsTask(BaseTask):
         return self.get_causal_effects(inputs)
 
     def explain(self) -> str:
-        return "Retrieve causal effects"
+        return "Retrieves user causal effects"
 
     def get_causal_effects(self, inputs):
-        print(inputs)
         return {
-            "'sleep_points_percentage' effect on 'stress_score'": 0.9,
-            "'steps' effect on 'stress_score'": 0.4,
-            "'carbs_intake' effect on 'stress_score'": 0.5,
+            "sleep_points_percentage on stress_score": 0.8,
+            "distance_walked (meters) on stress_score": 0.6,
+            "lightly_active_minutes on stress_score": 0.6,
+            "very_active_minutes on stress_score": 0.2,
+            "carbs_intake (% of all nutritional intake) on stress_score": 0.2,
+            "protein_intake (% of all nutritional intake) on stress_score": -0.3,
         }
 
         # Define subsets of variables

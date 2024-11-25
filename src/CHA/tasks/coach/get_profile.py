@@ -6,20 +6,20 @@ class QueryUserProfileTask(BaseTask):
     name: str = "get_profile"
     chat_name: str = "QueryUserProfileTask"
     description: str = (
-        "Retrieves user static information like age, gender, weight and height"
+        "Retrieves user static information like age, gender, weight and height. No inputs required."
     )
-    output_type: bool = False
-    return_direct: bool = True
+    output_type: bool = True
+    return_direct: bool = False
     dependencies: List[Any] = []
     inputs: List[str] = []
     output: List[str] = [
         "An object containing user infos like age, gender, weight and height"
     ]
 
-    def _execute(self) -> str:
+    def _execute(self, inputs) -> str:
         return self.get_user_profile()
 
-    def get_user_profile(self):
+    def get_user_profile(self, inputs):
         return {
             "Age": "27",
             "Gender": "Male",
