@@ -28,24 +28,39 @@ def load_wearable_data(user_id):
     return pd.read_csv(filepath)
 
 
-def preprocess_wearable_csv(df, days=21):
+def preprocess_wearable_csv(df):
     """
-    Preprocesses the wearable CSV data to extract a summary.
-
-    Args:
-    - file_path (str): Path to the wearable CSV file.
-    - days (int): Number of recent days to include in the summary.
-
-    Returns:
-    - str: Processed string summarizing the wearable data.
+    Aggregates (mean) wearable metrics over time and formats it for tabular display.
     """
     try:
         df["date"] = pd.to_datetime(df["date"])
-        recent_data = df.sort_values(by="date", ascending=False).head(days)
+        df = df.sort_values(by="date", ascending=False)
+        df.set_index("date", inplace=True)
 
-        # Format the data into a readable string (table-like)
-        summary = recent_data.to_string(index=False)
-        return f"{summary}"
+        # Aggregation periods
+        periods = {
+            "7d": "7D",
+            "14d": "14D",
+            "1m": "30D",
+            "3m": "90D",
+            "6m": "180D",
+            "1y": "365D",
+        }
+
+        # Create a DataFrame to store the aggregated results
+        aggregated_data = pd.DataFrame()
+        df = df.select_dtypes(include="number")  # Include only numeric columns
+        for period_label, period_duration in periods.items():
+            # Calculate the rolling mean for each period
+            rolling_agg = df.rolling(period_duration).mean()
+
+            # Collect the latest value for each period
+            aggregated_data[period_label] = rolling_agg.iloc[-1]
+
+        # Return the data as a dictionary (rows are metrics, columns are periods)
+        aggregated_data = aggregated_data.round(2)
+        aggregated_data.to_csv("test.csv")
+        return aggregated_data
     except Exception as e:
         raise ValueError(f"Error processing CSV file: {e}")
 

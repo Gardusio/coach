@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import InputForm from "./InputForm";
 import { generateRecommendation } from "../api";
-import ReactMarkdown from "react-markdown"; // For rendering markdown
+import ReactMarkdown from "react-markdown";
+import {
+    Box,
+    Tab,
+    Tabs,
+    Typography,
+    Card,
+    CardContent,
+} from "@mui/material";
 
 const Recommendations = () => {
     const [recommendation, setRecommendation] = useState(null);
-    const [activeTab, setActiveTab] = useState("final"); // "final" or "thoughts"
+    const [activeTab, setActiveTab] = useState(0);
 
     const handleGenerate = async (type, userId) => {
         const rec = await generateRecommendation(type, userId);
@@ -14,74 +22,76 @@ const Recommendations = () => {
 
     const renderFinalRecommendation = () => {
         if (!recommendation || !recommendation.final_recommendation) {
-            return <p>No recommendation generated yet.</p>;
+            return <Typography>No recommendation generated yet.</Typography>;
         }
-        const { choosen_recommendation, user_explanation } =
+        const { text, explanation } =
             recommendation.final_recommendation;
         return (
-            <div>
-                <h3>Final Recommendation</h3>
-                <ReactMarkdown>
-                    {`**Chosen Recommendation:** ${choosen_recommendation}\n\n**Explanation:** ${user_explanation}`}
-                </ReactMarkdown>
-            </div>
+            <Card variant="outlined" sx={{ marginBottom: 2 }}>
+                <CardContent>
+                    <Typography variant="h6">Final Recommendation</Typography>
+                    <ReactMarkdown>
+                        {`**Recommendation:** ${text}\n\n**Explanation:** ${explanation}`}
+                    </ReactMarkdown>
+                </CardContent>
+            </Card>
         );
     };
 
     const renderThoughtProcess = () => {
         if (!recommendation || !recommendation.ToT) {
-            return <p>No thought process available yet.</p>;
+            return <Typography>No thought process available yet.</Typography>;
         }
 
         return (
-            <div>
-                <h3>Tree of Thought (ToT)</h3>
+            <Box>
                 {Object.entries(recommendation.ToT).map(([key, value]) => (
-                    <div key={key} style={{ marginBottom: "20px" }}>
-                        <h4>{key.toUpperCase()}</h4>
-                        <p>
-                            <strong>Text:</strong> {value.text}
-                        </p>
-                        <p>
-                            <strong>Personalization Score:</strong>{" "}
-                            {value.validation.personalization_score}
-                        </p>
-                        <p>
-                            <strong>Groundness Score:</strong>{" "}
-                            {value.validation.groundness_score}
-                        </p>
-                        <p>
-                            <strong>Scores Explanation:</strong>{" "}
-                            {value.validation.scores_explanation}
-                        </p>
-                    </div>
+                    <Card key={key} variant="outlined" sx={{ marginBottom: 2 }}>
+                        <CardContent>
+                            <Typography variant="h6">{key.toUpperCase()}</Typography>
+                            <Typography>
+                                <strong>Text:</strong> {value.text}
+                            </Typography>
+                            <Typography>
+                                <strong>Personalization Score:</strong>{" "}
+                                {value.validation.personalization_score}
+                            </Typography>
+                            <Typography>
+                                <strong>Groundness Score:</strong>{" "}
+                                {value.validation.groundness_score}
+                            </Typography>
+                            <Typography>
+                                <strong>Scores Explanation:</strong>{" "}
+                                {value.validation.scores_explanation}
+                            </Typography>
+                        </CardContent>
+                    </Card>
                 ))}
-            </div>
+            </Box>
         );
     };
 
     return (
-        <div>
-            <h2>Recommendations</h2>
+        <Box>
+            <Typography variant="h4" gutterBottom>
+                Recommendations
+            </Typography>
             <InputForm onGenerate={handleGenerate} />
 
             {/* Tabs for Final Recommendation and Thought Process */}
-            <div>
-                <button
-                    onClick={() => setActiveTab("final")}
-                    style={{ marginRight: "10px" }}
-                >
-                    Final Recommendation
-                </button>
-                <button onClick={() => setActiveTab("thoughts")}>Thought Process</button>
-            </div>
+            <Tabs
+                value={activeTab}
+                onChange={(e, newValue) => setActiveTab(newValue)}
+                sx={{ marginBottom: 2, marginTop: 2 }}
+            >
+                <Tab label="Final Recommendation" />
+                <Tab label="Thought Process" />
+            </Tabs>
 
             {/* Render Active Tab */}
-            <div style={{ marginTop: "20px" }}>
-                {activeTab === "final" && renderFinalRecommendation()}
-                {activeTab === "thoughts" && renderThoughtProcess()}
-            </div>
-        </div>
+            {activeTab === 0 && renderFinalRecommendation()}
+            {activeTab === 1 && renderThoughtProcess()}
+        </Box>
     );
 };
 

@@ -1,79 +1,75 @@
 import React, { useState } from "react";
 import { getUserProfile, getWearableData, getCausalEffects } from "../api";
+import WearableData from "./WearableData";
+import Profile from "./Profile";
+import Effects from "./Effects";
+
+import {
+    Box,
+    Button,
+    Tab,
+    Tabs,
+    Typography,
+    TextField
+} from "@mui/material";
 
 const DataExplorer = () => {
     const [userId, setUserId] = useState(""); // User ID input state
-    const [profile, setProfile] = useState(null);
+    const [userProfile, setUserProfile] = useState(null);
     const [wearableData, setWearableData] = useState(null);
     const [effects, setEffects] = useState(null);
+    const [activeTab, setActiveTab] = useState(0);
 
-    const handleLoadProfile = async () => {
+    const handleLoad = async () => {
         if (!userId) {
             alert("Please enter a User ID first!");
             return;
         }
-        const data = await getUserProfile(userId);
-        setProfile(data);
+        const effects = await getCausalEffects(userId);
+        setEffects(effects);
+        const wearables = await getWearableData(userId);
+        setWearableData(wearables);
+        const profile = await getUserProfile(userId);
+        setUserProfile(profile);
     };
 
-    const handleLoadWearable = async () => {
-        if (!userId) {
-            alert("Please enter a User ID first!");
-            return;
-        }
-        const data = await getWearableData(userId);
-        setWearableData(data);
-    };
-
-    const handleLoadEffects = async () => {
-        if (!userId) {
-            alert("Please enter a User ID first!");
-            return;
-        }
-        const data = await getCausalEffects(userId);
-        setEffects(data);
-    };
 
     return (
-        <div>
-            <h2>Data Explorer</h2>
+        <Box>
+            <Typography variant="h4" gutterBottom>
+                Data Explorer
+            </Typography>
 
             {/* User ID Input */}
-            <label>
-                Enter User ID:{" "}
-                <input
-                    type="text"
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2, marginBottom: 2, marginTop: 2 }}>
+                <TextField
                     value={userId}
                     onChange={(e) => setUserId(e.target.value)}
-                    placeholder="User ID"
+                    label="User ID"
+                    variant="outlined"
+                    size="small"
+                    required
                 />
-            </label>
+                <Button variant="contained" color="info" onClick={handleLoad}>
+                    Load User info
+                </Button>
+            </Box>
+            <Tabs
+                value={activeTab}
+                onChange={(e, newValue) => setActiveTab(newValue)}
+                sx={{ marginBottom: 2, marginTop: 2 }}
+            >
+                <Tab label="User profile" />
+                <Tab label="Wearable data" />
+                <Tab label="Causal effects" />
 
-            {/* Buttons to Load Data */}
-            <button onClick={handleLoadProfile}>Load User Profile</button>
-            <button onClick={handleLoadWearable}>Load Wearable Data</button>
-            <button onClick={handleLoadEffects}>Load Causal Effects</button>
+            </Tabs>
 
-            {/* Display Loaded Data */}
-            {profile && (
-                <div>
-                    <h3>User Profile</h3>
-                    <pre>{JSON.stringify(profile, null, 2)}</pre>
-                </div>
-            )}
-            {wearableData && (
-                <div>
-                    <h3>Wearable Data</h3>
-                    <pre>{JSON.stringify(wearableData, null, 2)}</pre>
-                </div>
-            )}
-            {effects && (
-                <div>
-                    <h3>Causal Effects</h3>
-                    <pre>{JSON.stringify(effects, null, 2)}</pre>
-                </div>
-            )}
-        </div>
+            {activeTab === 0 && userProfile && <Profile profile={userProfile} />}
+            {activeTab === 1 && wearableData && <WearableData wearables={wearableData} />}
+            {activeTab === 2 && effects && <Effects effects={effects} />}
+
+        </Box>
     );
 };
 

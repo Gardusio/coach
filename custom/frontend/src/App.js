@@ -1,29 +1,38 @@
 import React, { useState } from "react";
 import Recommendations from "./components/Recommendations";
 import DataExplorer from "./components/DataExplorer";
+import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import './App.css';
 
 const App = () => {
   const [activeView, setActiveView] = useState("recommendations"); // "recommendations" or "data-explorer"
 
   return (
-    <div>
-      <header>
-        <h1>Personal Coach Testing Interface</h1>
-        <nav>
-          <button onClick={() => setActiveView("recommendations")}>
+    <Box sx={{ flexGrow: 1 }}>
+      {/* Header with Navigation */}
+      <AppBar position="static" sx={{ backgroundColor: "#282828", padding: 1 }}>
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Personal Coach Testing Interface
+          </Typography>
+          <Button
+            color="inherit"
+            onClick={() => setActiveView("recommendations")}
+          >
             Recommendations
-          </button>
-          <button onClick={() => setActiveView("data-explorer")}>
+          </Button>
+          <Button color="inherit" onClick={() => setActiveView("data-explorer")}>
             Data Explorer
-          </button>
-        </nav>
-      </header>
+          </Button>
+        </Toolbar>
+      </AppBar>
 
-      <main style={{ marginTop: "20px" }}>
+      {/* Main Content */}
+      <Box sx={{ padding: 4 }}>
         {activeView === "recommendations" && <Recommendations />}
         {activeView === "data-explorer" && <DataExplorer />}
-      </main>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

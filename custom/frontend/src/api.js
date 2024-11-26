@@ -7,7 +7,7 @@ export const generateRecommendation = async (type, userId) => {
         params: { type, user: userId },
     });
     console.log(response)
-    return response.data
+    return response.data.recommendation
 };
 
 export const getUserProfile = async (userId) => {
@@ -19,7 +19,7 @@ export const getUserProfile = async (userId) => {
 export const getWearableData = async (userId) => {
     const response = await axios.get(`${API_BASE_URL}/user/${userId}/wearable`);
     console.log(response)
-    return response.data;
+    return response.data.records;
 };
 
 export const getCausalEffects = async (userId) => {
