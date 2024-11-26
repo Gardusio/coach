@@ -10,6 +10,11 @@ export const generateRecommendation = async (type, userId) => {
     return response.data.recommendation
 };
 
+export const fetchPastRecommendations = async () => {
+    const response = await axios.get(`${API_BASE_URL}/coach/recommendations`);
+    return response.data;
+};
+
 export const getUserProfile = async (userId) => {
     const response = await axios.get(`${API_BASE_URL}/user/${userId}/profile`);
     console.log(response)

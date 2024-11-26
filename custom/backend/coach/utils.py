@@ -1,7 +1,7 @@
 import json
-import pandas as pd
 import os
 import logging
+import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 
@@ -36,6 +36,8 @@ def preprocess_wearable_csv(df):
         df["date"] = pd.to_datetime(df["date"])
         df = df.sort_values(by="date", ascending=False)
         df.set_index("date", inplace=True)
+        df["sleep_duration"] = df["sleep_duration"] / 60
+        
 
         # Aggregation periods
         periods = {
@@ -59,6 +61,7 @@ def preprocess_wearable_csv(df):
 
         # Return the data as a dictionary (rows are metrics, columns are periods)
         aggregated_data = aggregated_data.round(2)
+
         aggregated_data.to_csv("test.csv")
         return aggregated_data
     except Exception as e:

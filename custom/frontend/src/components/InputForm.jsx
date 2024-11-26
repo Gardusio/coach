@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Box, Button, MenuItem, Select, TextField } from "@mui/material";
+import { Box, Button, InputLabel, MenuItem, Select, TextField, } from "@mui/material";
 
 const InputForm = ({ onGenerate }) => {
     const [type, setType] = useState("daily");
-    const [userId, setUserId] = useState("");
+    const [userId, setUserId] = useState("2de");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -13,6 +13,7 @@ const InputForm = ({ onGenerate }) => {
     return (
         <Box component="form" onSubmit={handleSubmit} sx={{ marginBottom: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <InputLabel>Rec. period</InputLabel>
                 <Select
                     value={type}
                     onChange={(e) => setType(e.target.value)}
@@ -23,14 +24,20 @@ const InputForm = ({ onGenerate }) => {
                     <MenuItem value="weekly">Weekly</MenuItem>
                     <MenuItem value="monthly">Monthly</MenuItem>
                 </Select>
-                <TextField
+                <InputLabel>User</InputLabel>
+
+                <Select
                     value={userId}
                     onChange={(e) => setUserId(e.target.value)}
-                    label="User ID"
-                    variant="outlined"
+                    displayEmpty
                     size="small"
-                    required
-                />
+                >
+                    <MenuItem value="2de">22, Female</MenuItem>
+                    <MenuItem value="4ac"> 35, Female</MenuItem>
+                    <MenuItem value="564">27, Male</MenuItem>
+                    <MenuItem value="baa">40, Male</MenuItem>
+                    <MenuItem value="f1c">50, Male</MenuItem>
+                </Select>
                 <Button type="submit" variant="contained" color="primary">
                     Generate
                 </Button>

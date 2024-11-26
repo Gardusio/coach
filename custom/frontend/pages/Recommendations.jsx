@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import InputForm from "./InputForm";
-import { generateRecommendation } from "../api";
+import InputForm from "../components/InputForm";
 import ReactMarkdown from "react-markdown";
 import {
     Box,
@@ -11,14 +10,8 @@ import {
     CardContent,
 } from "@mui/material";
 
-const Recommendations = () => {
-    const [recommendation, setRecommendation] = useState(null);
+const Recommendations = ({ recommendation, recommendationUser, onGenerate }) => {
     const [activeTab, setActiveTab] = useState(0);
-
-    const handleGenerate = async (type, userId) => {
-        const rec = await generateRecommendation(type, userId);
-        setRecommendation(rec);
-    };
 
     const renderFinalRecommendation = () => {
         if (!recommendation || !recommendation.final_recommendation) {
@@ -29,7 +22,7 @@ const Recommendations = () => {
         return (
             <Card variant="outlined" sx={{ marginBottom: 2 }}>
                 <CardContent>
-                    <Typography variant="h6">Final Recommendation</Typography>
+                    <Typography variant="h6">Final Recommendation for {recommendationUser} </Typography>
                     <ReactMarkdown>
                         {`**Recommendation:** ${text}\n\n**Explanation:** ${explanation}`}
                     </ReactMarkdown>
@@ -76,7 +69,7 @@ const Recommendations = () => {
             <Typography variant="h4" gutterBottom>
                 Recommendations
             </Typography>
-            <InputForm onGenerate={handleGenerate} />
+            <InputForm onGenerate={onGenerate} />
 
             {/* Tabs for Final Recommendation and Thought Process */}
             <Tabs

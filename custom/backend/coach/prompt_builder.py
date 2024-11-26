@@ -33,6 +33,7 @@ def build_recommendations_prompt(rec_type, profile, causal_effects, wearables_su
     prompt = f"""
     Hey coach! 
     Generate an actionable, grounded {rec_type.upper()} personalized recommendation to improve stress based on my data (NOTE: Higher stress score is better).
+    Provide a schedule of activities I should engage in to improve.
     
     - My user profile (age, gender, height, weight, bmi) is : 
     {profile_str}
