@@ -63,7 +63,6 @@ def get_all_recommendations():
     """Fetch all stored recommendations."""
     try:
         recommendations = load_recommendations()
-        print("FETCHED RECS: ", len(recommendations))
         return jsonify(recommendations)
     except Exception as e:
         logger.error(f"Error fetching recommendations: {e}")

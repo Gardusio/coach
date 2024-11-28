@@ -37,7 +37,6 @@ def preprocess_wearable_csv(df):
         df = df.sort_values(by="date", ascending=False)
         df.set_index("date", inplace=True)
         df["sleep_duration"] = df["sleep_duration"] / 60
-        
 
         # Aggregation periods
         periods = {

@@ -481,5 +481,35 @@
             "explanation": "Breaking up your sitting time with regular physical activity can significantly lower the negative stress effects of prolonged sitting time. Your average daily steps over the past 21 days was 17358.29 steps - you could make it to 20000 with a bit more effort. Combine this with improved sleep quality from our previous recommendation and it could have a remarkable positive impact on your stress score."
         },
         "userId": "4ac"
+    },
+    {
+        "ToT": {
+            "rec1": {
+                "text": "Increase your daily steps to directly reduce your stress level.",
+                "validation": {
+                    "personalization_analysis": "The validation for increasing daily steps is derived from the direct positive effect of steps on the stress score observed in your data. Though your current average steps at 1m, 3m, 6m, 1y are all above 11k, increasing your daily step count could lead to a stronger positive effect.",
+                    "groundness_analysis": "Research has proven that physical activity, like daily walking, can help reduce stress hormones and stimulate the production of endorphins, your body's natural mood elevator."
+                }
+            },
+            "rec2": {
+                "text": "Limit your sedentary minutes to reduce stress levels.",
+                "validation": {
+                    "personalization_analysis": "Your causal analysis data indicate that extended periods of inactivity, as represented in 'sedentary_minutes', lead to increased stress levels. Currently, your sedentary minutes are averagely 679.65 minutes at 6m, reducing this could help in managing stress levels.",
+                    "groundness_analysis": "Scientifically speaking, being sedentary for extended periods can lead to anxiety and stress. A quick stretch, a short walk, or any physical activity can break this pattern."
+                }
+            },
+            "rec3": {
+                "text": "Consider increasing your 'Very_active_minutes' to manage your stress level.",
+                "validation": {
+                    "personalization_analysis": "There's a strong positive effect of very active minutes on the stress score in your data. Currently, very active minutes for 1m, 3m, 6m, 1y are around 50 minutes, which suggests there's room for improvement.",
+                    "groundness_analysis": "Physical activity in general and high-intensity exercise, in particular, are known to relieve stress. Exercise helps the mind get distracted from stressful thoughts, and it also stimulates the production of feel-good hormones known as endorphins."
+                }
+            }
+        },
+        "final_recommendation": {
+            "text": "Our recommendation for you is to limit your sedentary minutes. Please try to perform some light physical activities each hour; like getting up for a short walk, or do a quick stretching session. A few changes in your workplace might help: consider a standing desk or an active chair, for example. Beyond just work, being mindful of elongated periods of inactivity and making a concerted effort to move more in general, like during commercials while watching TV, or taking the stairs instead of the elevator, will greatly help.",
+            "explanation": "This recommendation is derived from your data which strongly suggests that limit sedentary minutes could majorly improve your stress scores. We noticed that you currently tend to have a high number of sedentary minutes (679.65 on average over the past 6 months), hence this area could use improvement. And as we know, physical activity plays a crucial role in reducing stress and promoting overall wellbeing. So, reducing sitting time should be beneficial for your stress management."
+        },
+        "userId": "2de"
     }
 ]

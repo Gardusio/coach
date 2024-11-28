@@ -9,7 +9,7 @@ import "./App.css";
 
 const App = () => {
   const [activeView, setActiveView] = useState("recommendations"); // View state
-  const [userId, setUserId] = useState(""); // User ID
+  const [userId, setUserId] = useState("2de"); // User ID
   const [userProfile, setUserProfile] = useState(null); // Shared state for user profile
   const [wearableData, setWearableData] = useState(null); // Shared state for wearable data
   const [effects, setEffects] = useState(null); // Shared state for causal effects

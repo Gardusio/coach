@@ -2,24 +2,23 @@ import React, { useState } from "react";
 import WearableData from "../components/WearableData";
 import Profile from "../components/Profile";
 import Effects from "../components/Effects";
+
 import {
     Box,
     Button,
     Tab,
     Tabs,
-    Typography,
     TextField,
+    Typography,
 } from "@mui/material";
+
 
 const DataExplorer = ({
     userId,
     setUserId,
     userProfile,
-    setUserProfile,
     wearableData,
-    setWearableData,
     effects,
-    setEffects,
     onLoadUserInfo,
 }) => {
     const [activeTab, setActiveTab] = useState(0);
@@ -38,7 +37,6 @@ const DataExplorer = ({
                 Data Explorer
             </Typography>
 
-            {/* User ID Input */}
             <Box
                 sx={{
                     display: "flex",
